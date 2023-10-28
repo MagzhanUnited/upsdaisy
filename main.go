@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
-	// Replace "YOUR_BOT_API_TOKEN" with the token you received from the BotFather.
-	bot, err := tgbotapi.NewBotAPI("6614980196:AAGjdnaxpNgybhFJQA_blvPL3OQjHEMuYd8")
+	// Replace "YOUR_BOT_API_TOK6614980196:AAGjdnaxpNgybhFJQA_blvPL3OQjHEMuYd8EN" with the token you received from the BotFather.
+	bot, err := tgbotapi.NewBotAPI("")
 	if err != nil {
 		log.Panic(err)
 	}
