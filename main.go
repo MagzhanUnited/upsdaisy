@@ -35,7 +35,7 @@ func main() {
 
 		fmt.Println("update.Message.Text:", update.Message.Text)
 		if isYouTubeURL(update.Message.Text) {
-			audioBytes, audioextraction := handler.ServeAudio(handler.VideoData{Videourl: update.Message.Text})
+			audioBytes, audioextraction := handler.VideoData{Videourl: update.Message.Text}.ServeAudio()
 			audioFile := tgbotapi.FileBytes{Name: audioextraction.AudioName, Bytes: audioBytes}
 			audio := tgbotapi.NewAudioUpload(update.Message.Chat.ID, audioFile)
 			_, err := bot.Send(audio)
@@ -63,5 +63,5 @@ func handleCommands(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) {
 }
 
 func isYouTubeURL(text string) bool {
-	return strings.HasPrefix(text, "https://youtu.be/")
+	return strings.HasPrefix(text, "https")
 }

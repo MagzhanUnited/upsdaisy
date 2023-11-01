@@ -9,7 +9,7 @@ type VideoData struct {
 	Videourl string `json:"videourl"`
 }
 
-func ServeAudio(videoData VideoData) ([]byte, *audioextraction.AudioExtraction) {
+func (videoData VideoData)ServeAudio() ([]byte, *audioextraction.AudioExtraction) {
 	stream, audioExtraction, err := audioextraction.DownloadFromYoutube(videoData.Videourl)
 	if err != nil {
 		fmt.Println(err)
