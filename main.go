@@ -3,15 +3,13 @@ package main
 import (
 	"fmt"
 	"log"
-	handler "mytelegrambot/Handler"
-	"strings"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 func main() {
-	// Replace "YOUR_BOT_API_TOK6614980196:AAGjdnaxpNgybhFJQA_blvPL3OQjHEMuYd8EN" with the token you received from the BotFather.
-	bot, err := tgbotapi.NewBotAPI("")
+	// Replace "YOUR_BOT_API_TOKEN" with the token you received from the BotFather.
+	bot, err := tgbotapi.NewBotAPI("6517147428:AAG_OkAcpjQOolOjzXko3rjvE4lcwtFFWhU")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -30,38 +28,12 @@ func main() {
 		if update.Message == nil {
 			continue
 		}
-
-		handleCommands(bot, update.Message)
-
 		fmt.Println("update.Message.Text:", update.Message.Text)
-		if isYouTubeURL(update.Message.Text) {
-			audioBytes, audioextraction := handler.VideoData{Videourl: update.Message.Text}.ServeAudio()
-			audioFile := tgbotapi.FileBytes{Name: audioextraction.AudioName, Bytes: audioBytes}
-			audio := tgbotapi.NewAudioUpload(update.Message.Chat.ID, audioFile)
-			_, err := bot.Send(audio)
-			if err != nil {
-				log.Panic(err)
-			}
-		}
-
-	}
-}
-
-func handleCommands(bot *tgbotapi.BotAPI, msg *tgbotapi.Message) {
-	command := msg.Command()
-
-	switch command {
-	case "start":
-		msg := tgbotapi.NewMessage(msg.Chat.ID, "Ютуб видеоның ссылкасын жібер")
-		bot.Send(msg)
-	default:
-		if !isYouTubeURL(msg.Text) {
-			msg := tgbotapi.NewMessage(msg.Chat.ID, "Мен сізді түсінбедім. бастау үшін /start деп жазыңыз.")
-			bot.Send(msg)
+		// Reply to the user's message.
+		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "SUIIIII")
+		_, err := bot.Send(msg)
+		if err != nil {
+			log.Panic(err)
 		}
 	}
-}
-
-func isYouTubeURL(text string) bool {
-	return strings.HasPrefix(text, "https")
 }
