@@ -80,35 +80,39 @@ memento_care_taker = TaskMementoCareTaker()
 # Load tasks from file
 todo_manager.load_tasks_from_file()
 
-while True:
+def ToDoService(user_input, task):
+    # print("HERE")
     # Get user input
-    user_input = input("Enter a command (add/complete/delete/list/undo/quit): ")
+    # user_input = input("Enter a command (add/complete/delete/list/undo/quit): ")
 
     if user_input == "quit":
-        break
+        return ""
 
     if user_input == "list":
+        result = ''
         tasks = todo_manager.list_tasks()
-        print("Current Tasks:")
-        for task in tasks:
-            print(task)
+        result = "Current Tasks:"
+        for ttask in tasks:
+            result += ttask
+        return result
     elif user_input == "undo":
-        index = int(input("Enter the index of the state to restore: "))
+        index = int(task)
         memento = memento_care_taker.get_memento(index)
         if memento:
             todo_manager.tasks = memento.tasks
-            print("State restored.")
+            return "State restored."
         else:
-            print("Invalid state index.")
+            return "Invalid state index."
     elif user_input in ["add", "complete", "delete"]:
-        task = input("Enter the task:")
-
         # Create a memento before executing the command
         memento = TaskMemento(list(todo_manager.tasks))
         memento_care_taker.add_memento(memento)
 
         command_obj = ToDoCommand(user_input)
         command_obj.execute(task)
+        return "Task 'somehitng' has been updated."
+    return ""
 
 # Save tasks to file when quitting
 
+# print(ToDoService( "list", "something"))
